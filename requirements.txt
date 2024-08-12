@@ -1,0 +1,4 @@
+openai==1.35.15
+requests==2.31.0
+pillow==10.2.0
+streamlit==1.36.0
