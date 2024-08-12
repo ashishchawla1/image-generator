@@ -36,10 +36,23 @@ def fetch_and_display_image(image_url):
     response = requests.get(image_url)
     if response.status_code == 200:
         img = Image.open(BytesIO(response.content))
-        return img
+        st.image(img, caption='Generated Image')
+        
+        # Save the image for download
+        img_buffer = BytesIO()
+        img.save(img_buffer, format="PNG")
+        img_buffer.seek(0)
+
+        # Add a download button
+        st.download_button(
+            label="Download Image",
+            data=img_buffer,
+            file_name="generated_image.png",
+            mime="image/png"
+        )
     else:
         st.error("Failed to retrieve the image.")
-        return None
+
 
 def give_image(paragraph, headline, appointment, industry, services, audience, parameters,base):
     prompt = give_prompt(paragraph, headline, appointment, industry, services, audience, parameters,base)
